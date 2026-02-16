@@ -3,7 +3,7 @@
 
 # Format: YYYY.MM.DD_HH:mm
 TIMESTAMP=$(date +"%Y.%m.%d_%H:%M")
-BACKUP_DIR="${TIMESTAMP}"
+BACKUP_DIR="backups/${TIMESTAMP}"
 
 mkdir -p "${BACKUP_DIR}"
 
