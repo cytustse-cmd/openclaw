@@ -1,57 +1,68 @@
 #!/bin/bash
-# scripts/backup.sh - Snapshot-style backup of the entire session/workspace
+# scripts/backup.sh - Granular snapshot-style backup (YYYY/MM/DD/HH/mm/ss)
 
-TIMESTAMP=$(date +%Y%m%d_%H%M)
-BACKUP_FILE="logs/sessions/snapshot_${TIMESTAMP}.md"
+YEAR=$(date +%Y)
+MONTH=$(date +%m)
+DAY=$(date +%d)
+HOUR=$(date +%H)
+MINUTE=$(date +%M)
+SECOND=$(date +%S)
 
-echo "# Session Snapshot: $(date '+%Y-%m-%d %H:%M')" > "$BACKUP_FILE"
-echo "" >> "$BACKUP_FILE"
+BACKUP_ROOT="archive/$YEAR/$MONTH/$DAY/$HOUR/$MINUTE/$SECOND"
+mkdir -p "$BACKUP_ROOT"
 
-echo "## 🧠 Long-Term Memory (MEMORY.md)" >> "$BACKUP_FILE"
-echo '```markdown' >> "$BACKUP_FILE"
-cat MEMORY.md >> "$BACKUP_FILE"
-echo '```' >> "$BACKUP_FILE"
-echo "" >> "$BACKUP_FILE"
+SNAPSHOT_FILE="$BACKUP_ROOT/snapshot_${YEAR}${MONTH}${DAY}_${HOUR}${MINUTE}${SECOND}.md"
 
-echo "## 👤 Identity & Soul" >> "$BACKUP_FILE"
+echo "Creating ultra-granular snapshot in $SNAPSHOT_FILE..."
+
+echo "# Session Snapshot: $YEAR-$MONTH-$DAY $HOUR:$MINUTE:$SECOND" > "$SNAPSHOT_FILE"
+echo "" >> "$SNAPSHOT_FILE"
+
+echo "## 🧠 Long-Term Memory (MEMORY.md)" >> "$SNAPSHOT_FILE"
+echo '```markdown' >> "$SNAPSHOT_FILE"
+cat MEMORY.md >> "$SNAPSHOT_FILE"
+echo '```' >> "$SNAPSHOT_FILE"
+echo "" >> "$SNAPSHOT_FILE"
+
+echo "## 👤 Identity & Soul" >> "$SNAPSHOT_FILE"
 for f in identity/*.md; do
-    echo "### File: $f" >> "$BACKUP_FILE"
-    echo '```markdown' >> "$BACKUP_FILE"
-    cat "$f" >> "$BACKUP_FILE"
-    echo '```' >> "$BACKUP_FILE"
+    echo "### File: $f" >> "$SNAPSHOT_FILE"
+    echo '```markdown' >> "$SNAPSHOT_FILE"
+    cat "$f" >> "$SNAPSHOT_FILE"
+    echo '```' >> "$SNAPSHOT_FILE"
 done
-echo "" >> "$BACKUP_FILE"
+echo "" >> "$SNAPSHOT_FILE"
 
-echo "## ⚙️ Configs" >> "$BACKUP_FILE"
+echo "## ⚙️ Configs" >> "$SNAPSHOT_FILE"
 for f in configs/*.md; do
-    echo "### File: $f" >> "$BACKUP_FILE"
-    echo '```markdown' >> "$BACKUP_FILE"
-    cat "$f" >> "$BACKUP_FILE"
-    echo '```' >> "$BACKUP_FILE"
+    echo "### File: $f" >> "$SNAPSHOT_FILE"
+    echo '```markdown' >> "$SNAPSHOT_FILE"
+    cat "$f" >> "$SNAPSHOT_FILE"
+    echo '```' >> "$SNAPSHOT_FILE"
 done
-echo "" >> "$BACKUP_FILE"
+echo "" >> "$SNAPSHOT_FILE"
 
-echo "## 📝 Projects & Tasks" >> "$BACKUP_FILE"
+echo "## 📝 Projects & Tasks" >> "$SNAPSHOT_FILE"
 for f in projects/*.md; do
-    echo "### File: $f" >> "$BACKUP_FILE"
-    echo '```markdown' >> "$BACKUP_FILE"
-    cat "$f" >> "$BACKUP_FILE"
-    echo '```' >> "$BACKUP_FILE"
+    echo "### File: $f" >> "$SNAPSHOT_FILE"
+    echo '```markdown' >> "$SNAPSHOT_FILE"
+    cat "$f" >> "$SNAPSHOT_FILE"
+    echo '```' >> "$SNAPSHOT_FILE"
 done
-echo "" >> "$BACKUP_FILE"
+echo "" >> "$SNAPSHOT_FILE"
 
-echo "## 📜 Recent Logs (Today)" >> "$BACKUP_FILE"
+echo "## 📜 Recent Logs (Today)" >> "$SNAPSHOT_FILE"
 TODAY=$(date +%Y-%m-%d)
 if [ -f "logs/${TODAY}.md" ]; then
-    echo "### File: logs/${TODAY}.md" >> "$BACKUP_FILE"
-    echo '```markdown' >> "$BACKUP_FILE"
-    cat "logs/${TODAY}.md" >> "$BACKUP_FILE"
-    echo '```' >> "$BACKUP_FILE"
+    echo "### File: logs/${TODAY}.md" >> "$SNAPSHOT_FILE"
+    echo '```markdown' >> "$SNAPSHOT_FILE"
+    cat "logs/${TODAY}.md" >> "$SNAPSHOT_FILE"
+    echo '```' >> "$SNAPSHOT_FILE"
 fi
 
-echo "Created monolithic snapshot at $BACKUP_FILE"
+echo "Created snapshot at $SNAPSHOT_FILE"
 
 # Sync to GitHub
 git add .
-git commit -m "Snapshot Backup: $TIMESTAMP"
+git commit -m "Ultra-Granular Backup: $YEAR-$MONTH-$DAY $HOUR:$MINUTE:$SECOND"
 git push origin main

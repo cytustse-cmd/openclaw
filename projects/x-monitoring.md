@@ -35,6 +35,6 @@
 - 📊 其他
 
 ## 数据存储
-- 原始推文：`memory/x-feeds/YYYYMMDD/`
-- 突发记录：`memory/x-alerts/`
-- 每日总结：`memory/x-daily/`
+- 原始推文：`logs/x-feeds/YYYYMMDD/`
+- 突发记录：`logs/x-alerts/`
+- 每日总结：`logs/x-daily/`
