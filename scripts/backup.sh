@@ -1,21 +1,57 @@
 #!/bin/bash
-# scripts/backup.sh - Backup to granular date-based structure
+# scripts/backup.sh - Snapshot-style backup of the entire session/workspace
 
-YEAR=$(date +%Y)
-MONTH=$(date +%m)
-DAY=$(date +%d)
-TIME=$(date +%H%M)
+TIMESTAMP=$(date +%Y%m%d_%H%M)
+BACKUP_FILE="logs/sessions/snapshot_${TIMESTAMP}.md"
 
-BACKUP_ROOT="archive/$YEAR/$MONTH/$DAY/$TIME"
-mkdir -p "$BACKUP_ROOT"
+echo "# Session Snapshot: $(date '+%Y-%m-%d %H:%M')" > "$BACKUP_FILE"
+echo "" >> "$BACKUP_FILE"
 
-echo "Creating granular backup in $BACKUP_ROOT..."
-cp MEMORY.md "$BACKUP_ROOT/"
-cp -r identity/ logs/ projects/ configs/ scripts/ "$BACKUP_ROOT/" 2>/dev/null || true
+echo "## 🧠 Long-Term Memory (MEMORY.md)" >> "$BACKUP_FILE"
+echo '```markdown' >> "$BACKUP_FILE"
+cat MEMORY.md >> "$BACKUP_FILE"
+echo '```' >> "$BACKUP_FILE"
+echo "" >> "$BACKUP_FILE"
 
-echo "Pushing to GitHub..."
+echo "## 👤 Identity & Soul" >> "$BACKUP_FILE"
+for f in identity/*.md; do
+    echo "### File: $f" >> "$BACKUP_FILE"
+    echo '```markdown' >> "$BACKUP_FILE"
+    cat "$f" >> "$BACKUP_FILE"
+    echo '```' >> "$BACKUP_FILE"
+done
+echo "" >> "$BACKUP_FILE"
+
+echo "## ⚙️ Configs" >> "$BACKUP_FILE"
+for f in configs/*.md; do
+    echo "### File: $f" >> "$BACKUP_FILE"
+    echo '```markdown' >> "$BACKUP_FILE"
+    cat "$f" >> "$BACKUP_FILE"
+    echo '```' >> "$BACKUP_FILE"
+done
+echo "" >> "$BACKUP_FILE"
+
+echo "## 📝 Projects & Tasks" >> "$BACKUP_FILE"
+for f in projects/*.md; do
+    echo "### File: $f" >> "$BACKUP_FILE"
+    echo '```markdown' >> "$BACKUP_FILE"
+    cat "$f" >> "$BACKUP_FILE"
+    echo '```' >> "$BACKUP_FILE"
+done
+echo "" >> "$BACKUP_FILE"
+
+echo "## 📜 Recent Logs (Today)" >> "$BACKUP_FILE"
+TODAY=$(date +%Y-%m-%d)
+if [ -f "logs/${TODAY}.md" ]; then
+    echo "### File: logs/${TODAY}.md" >> "$BACKUP_FILE"
+    echo '```markdown' >> "$BACKUP_FILE"
+    cat "logs/${TODAY}.md" >> "$BACKUP_FILE"
+    echo '```' >> "$BACKUP_FILE"
+fi
+
+echo "Created monolithic snapshot at $BACKUP_FILE"
+
+# Sync to GitHub
 git add .
-git commit -m "Granular Backup: $YEAR-$MONTH-$DAY $TIME"
+git commit -m "Snapshot Backup: $TIMESTAMP"
 git push origin main
-
-echo "Backup complete."
