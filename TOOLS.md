@@ -13,23 +13,21 @@ Things like:
 - Device nicknames
 - Anything environment-specific
 
-## Examples
+### QMD (Local Search Engine)
 
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
+- **安装**: `npm install -g @tobilu/qmd`
+- **路径**: `~/bin/qmd` (已 alias)
+- **Collections**:
+  - `memory`: ~/.openclaw/workspace/memory/
+  - `workspace`: ~/.openclaw/workspace/
+- **用法**:
+  - `qmd query "搜索内容"` - 混合搜索（BM25 + 向量 + LLM重排）
+  - `qmd search "关键词"` - 快速关键词
+  - `qmd vsearch "语义搜索"` - 向量语义搜索
+  - `qmd get qmd://memory/xxx.md` - 获取文档
+  - `qmd embed` - 重新生成向量（文件变更后需要）
+- **模型**: Apple M4 GPU 加速
+- **状态**: `qmd status`
 
 ## Why Separate?
 
