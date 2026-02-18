@@ -1,0 +1,15 @@
+{
+  "embedding": {
+    "apiKey": "sk-cp-coxAC_y7xyXkO84sJvokXDIIUDlLkXvWVBGWgk0myKnxCC-I7fiQFx-zSkjetcEwIBrGQkPkO_SmTAymeoABQFVN7sDfNjGhCI96pS-4dL0Hadx7O8Z5d9c",
+    "model": "embo-01",
+    "baseUrl": "https://api.minimax.chat/v1"
+  },
+  "llm": {
+    "apiKey": "sk-cp-coxAC_y7xyXkO84sJvokXDIIUDlLkXvWVBGWgk0myKnxCC-I7fiQFx-zSkjetcEwIBrGQkPkO_SmTAymeoABQFVN7sDfNjGhCI96pS-4dL0Hadx7O8Z5d9c",
+    "model": "abab6.5s-chat",
+    "baseUrl": "https://api.minimax.chat/v1"
+  },
+  "dbPath": "/Users/xfurious/.openclaw/workspace/epro-test/memory-db",
+  "autoCapture": true,
+  "autoRecall": true
+}
