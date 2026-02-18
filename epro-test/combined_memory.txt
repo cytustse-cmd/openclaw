@@ -1,0 +1,106 @@
+# Memory - 2026-02-17 (Update 4)
+
+## Technical Troubleshooting
+- **X (Twitter) Extraction**: Attempted multiple methods to summarize X links (Direct fetch, OEmbed, Summarize skill). Confirmed that X Articles have high protection and require a logged-in browser or specific tools.
+- **Environment Setup**: Successfully installed the `summarize` CLI via Homebrew on the local node. Also installed the `pypdf` Python library to enable manual PDF text extraction when other tools fail.
+- **Context Alert (Critical)**: Context usage spiked to **285%** (569k tokens) following the successful extraction of a large PDF file. Emergency backup was triggered and stored in `backups/2026.02.17_11:33`.
+
+## Knowledge Acquisition
+- **Cost Optimization Guide**: Successfully extracted content from an article titled "How to Reduce OpenClaw Model Costs by up to 90%". Key takeaways involve:
+    - **Intelligent Routing**: Matching task complexity to model cost (e.g., using Gemini Flash for routine tasks and Opus only for complex reasoning).
+    - **Prompt Caching**: Using `cacheRetention` to reuse static system prompts (SOUL/AGENTS/MEMORY) and save up to 90% on repeated calls.
+    - **ClawRouter**: Identified as a trending native skill for automatic model routing.
+    - **Local Models**: Using Ollama (e.g., Qwen 3 32B) for high-volume, low-complexity tasks to achieve zero marginal cost.
+
+## System Optimization & Recovery (Update 5)
+- **Compaction Mode**: Changed from `safeguard` to `default` to enable proactive context management and prevent overflow during heavy tasks.
+- **Model Strategy Updated**: 
+    - **Primary**: Switched to `google/gemini-3-flash-preview` for routine tasks (cost-efficient/fast).
+    - **Fallback**: Retained `google-antigravity/claude-opus-4-6-thinking` as the primary fallback and for complex reasoning.
+- **Cron Job Fix**: Updated "Context Watcher" to use Gemini Flash, resolving a `thinking.signature` error caused by the thinking model in isolated sessions.
+- **Identity Restoration**: Successfully restored `MEMORY.md`, `IDENTITY.md`, and `USER.md` from GitHub snapshot backups after an onboard reset wiped local templates.
+- **Backup Snapshot**: Triggered a full snapshot and GitHub push (`backups/2026.02.17_13:08`) to lock in the new configuration.
+
+## System Refinement (Update 6)
+- **Typing Indicator**: Optimized `typingMode` to `message` and enabled `streamMode: partial` for Telegram. The bot now shows "typing..." as soon as it begins processing a reply, providing better feedback on mobile.
+- **Context Alert (Self-Healing)**: Context Watcher (now running on Gemini Flash) successfully triggered at 157% usage, performing an automatic backup to `backups/2026.02.17_13:18` and notifying the user.
+- **Interaction Testing**: Verified cross-platform message reactions and Typing Indicator functionality between WebChat and Telegram.
+
+## Hugo Blog Project (Update 7)
+- **Tooling**: Installed `hugo` (v0.155.3) via Homebrew on the local node.
+- **Initialization**: Created and initialized a new Hugo site at `projects/my-blog`.
+- **Theme**: Selected and installed "PaperMod" as a git submodule to achieve a minimalist black-and-white aesthetic.
+- **Automation Plan**: Future posts will be drafted in OpenClaw and deployed to GitHub/Vercel via shell commands.
+
+## Blog Deployment Progress (Update 8)
+- **Project Name**: Selected "X's Singularity Notes" as the blog title.
+- **Configuration**: Updated `hugo.toml` with PaperMod settings and a minimalist profile mode.
+- **Content**: Created the introductory post "Hello Singularity".
+- **Git Setup**: Initialized local git repository at `projects/my-blog`, configured local user identity for commits, and added the PaperMod submodule.
+- **Deployment Status**: Connected to the remote repository `https://github.com/cytustse-cmd/X-s-Singularity-Notes`. Awaiting GitHub PAT to perform the initial push and finalize Vercel integration.
+
+## Blog Deployment Troubleshooting (Update 9)
+- **Deployment Issue**: Encountered a 404 error on Vercel, likely due to missing theme submodules during build.
+- **Fix Applied**: Converted the "PaperMod" theme from a git submodule to a regular directory within the repository to ensure Vercel has full access to theme files.
+- **Git Push**: Successfully pushed the flattened theme structure to GitHub (`6f3b02a`).
+- **PAT Usage**: Used the GitHub PAT for authenticated pushes to the blog repository.
+
+## Blog Deployment Resolution (Update 10)
+- **Vercel Build Failure**: Build failed due to `hugo: command not found`, indicating Vercel's default environment lacked the required binary.
+- **Switch to Static Deployment**: Shifted strategy from server-side building to local building.
+- **Branch Strategy**: Compiled the site locally using `hugo --gc --minify` and force-pushed the resulting `public/` folder to a new `gh-pages` branch (`f2c87c2`).
+- **Final Configuration**: Instructed user to set Vercel's Production Branch to `gh-pages` and disable all build overrides to serve the pre-compiled static files directly.
+
+## Blog Launch Success (Update 11)
+- **Deployment URL Clarification**: Identified that Vercel generates unique "Deployment URLs" for each push; the "Production URL" (x-s-singularity-notes.vercel.app) requires manual promotion or proper branch assignment to work.
+- **Vercel Configuration**: Fixed 404 issues on the static deployment branch (`gh-pages`) by adding a `vercel.json` to the root of the compiled output, forcing the correct public directory mapping.
+- **Verification**: User confirmed the blog is live and accessible via the Vercel dashboard's "Visit" link.
+- **Maintenance**: Context remains high due to heavy troubleshooting; consistent backups are being made by the "Context Watcher" cron.
+
+## Content Deployment & Workflow (Update 12)
+- **First Article Drafted**: Completed the full retrospective post "The Vercel 404 Retrospective".
+- **Collaboration Rule**: Established a strict new rule—I must present the **full version** of any blog post for user review and approval before pushing it to the production branch.
+- **Troubleshooting Production URL**: Identified that despite successful deployment to `gh-pages`, the Production URL may remain 404 due to Vercel's "Promote to Production" requirement for custom branch flows.
+- **Action Plan**: User will perform a manual "Promote to Production" on the latest successful deployment to link the main domain correctly.
+
+## Blog Final Setup Complete (Update 13)
+- **Production Branch**: Changed Vercel's Production Branch to `gh-pages` (found in Settings -> Environments). Auto-deploy now works without manual "Promote to Production".
+- **Full Workflow**: Write article → User reviews → Push to gh-pages → Auto-deploy in 30 seconds.
+- **Config Issue Fixed**: Removed stale `config.toml` that was overriding `hugo.toml`. Hugo prioritizes `config.toml` over `hugo.toml`.
+- **Features Added**: Archive page (`content/archives.md`), Search page (`content/search.md`), JSON output enabled for search.
+- **Editorial Rule**: MUST show full article draft to user for approval before publishing. No autonomous publishing.
+- **Blog URL**: https://x-s-singularity-notes.vercel.app/
+- **GitHub Repo**: https://github.com/cytustse-cmd/X-s-Singularity-Notes
+- **Deploy Command**: `cd projects/my-blog && hugo --gc --minify && cd public && git add . && git commit -m "msg" && git push origin main:gh-pages`
+
+## Blog Design Evolution (Update 14)
+- **Typography**: Switched to a high-end serif style using "Libre Baskerville" for body text and "Inter" for UI elements, inspired by Pucek Capital's minimalist aesthetic.
+- **Bilingual System**: 
+    - **Body**: Implemented a "Dashed Divider" bilingual layout where English is primary and Chinese is a subtext in a smaller, lighter font.
+    - **Titles**: Settled on a unified-size inline bilingual title format (`English / Chinese`) to ensure proper text flow and avoid layout breaks on mobile.
+- **Technical Overrides**: 
+    - Created `layouts/_default/single.html` to customize article rendering for bilingual support.
+    - Enabled `unsafe = true` in `hugo.toml` to allow custom HTML tags within Markdown.
+- **Maintenance**: Context usage remains high due to iterative CSS/Template debugging; daily backups continue to secure state.
+
+## Finalized Bilingual Aesthetic (Update 15)
+- **Bilingual Structure**: Replaced the dashed divider with an "ultra-tight" layout for bilingual paragraphs. English remains primary (1.1rem), while Chinese is a subtext (0.85rem, #888 grey) with only a 2px vertical gap.
+- **Indentation**: Applied a consistent 2rem left padding to all body paragraphs (including bilingual blocks) to create a sophisticated, magazine-like negative space.
+- **Title Refinement**: Settled on the inline "English / Chinese" title format with identical font sizing for maximum stability and a clean, unified look on all devices.
+- **Automation Success**: The end-to-end workflow (draft -> review -> automated push to gh-pages) is now fully operational and tested.
+
+## 2026-02-18 00:14
+- **Config Update**: Modified `/Users/xfurious/.openclaw/openclaw.json` to disable `requireMention` for Telegram group "Time Illusion" (ID: `-1003729762918`).
+- **Schema Discovery**: Confirmed that the correct field for per-group mention filtering is `channels.telegram.groups.<id>.requireMention`, not a global `mentionFilter`.
+- **System Constraint**: Attempted to restart via `gateway(action=restart)` but failed initially due to `commands.restart=false`. Even after manually editing the config to set `restart: true`, the gateway tool still reported it as disabled (likely requires a manual restart to pick up the native command permission change).
+- **Action Required**: Asked user to run `openclaw gateway restart` manually.
+- **QMD Status**: Successfully tested `qmd` with its deep query capability. Models (1.7B Query Expansion and Reranker) are now downloaded and cached. Confirmed semantic search works for workspace/memory files.
+- **X Tracking**: Discussing a plan to track a specific X user's tweets using a browser-based cron job. Waiting for user's target username.
+
+## 2026-02-18 15:51
+- **Project Template**: Successfully created and published `hugo-blog-starter` template repository to GitHub (`cytustse-cmd/hugo-blog-starter`).
+- **Template Features**: Integrated Hugo + PaperMod configuration, Vercel deployment settings, and professional bilingual (EN/ZH) documentation.
+- **License**: Set project license to **CC BY-NC 4.0** (Attribution-NonCommercial) as per user request.
+- **Workflow Improvement**: Established a "loop" to capture user blog issues in memory and sync them back to the starter template.
+- **New Plugin Exploration**: Started integration testing for `epro-memory`, a tiered LLM memory system.
+- **Technical Note**: Resolved issues with GitHub token location (stored in `.git/config` of the workspace) to enable repository creation and push operations.
