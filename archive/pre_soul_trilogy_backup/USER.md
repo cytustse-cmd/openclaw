@@ -12,10 +12,6 @@
 - Uses Telegram for communication
 - **Time format: 24-hour (HH:MM)** — always use 24-hour format
 
-## Preferences (High Priority)
-
-- **Detailed Summaries**: When summarizing articles, videos, or any content, ALWAYS include granular and "human" details. I value specific numbers (money, stats), emotional struggles, private reflections, and personal insights over dry, high-level overviews. I want the "complete picture" including the messy/personal bits.
-
 ---
 
 The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
