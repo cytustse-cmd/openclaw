@@ -132,7 +132,7 @@ chmod +x ~/.openclaw/workspace/scripts/*.py
 
 ## ⚙️ 关键配置
 
-- **Session 清理阈值**: 2MB
+- **Session 清理阈值**: 1MB
 - **MEMORY.md 精简阈值**: 10KB
 - **Context 报警线**: 80%
 

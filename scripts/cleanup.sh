@@ -14,9 +14,9 @@ BOTS=(
 )
 
 # 阈值
-MAX_DAILY_BYTES=51200      # 日记超过 50KB 触发截断
+MAX_DAILY_BYTES=20480      # 日记超过 20KB 触发截断
 KEEP_LINES=300             # 截断后保留最后 N 行
-MAX_SESSION_BYTES=2097152  # Session 超过 2MB 触发清理
+MAX_SESSION_BYTES=1048576  # Session 超过 1MB 触发清理
 BAK_EXPIRE_DAYS=7          # 备份保留天数
 ARCHIVE_EXPIRE_DAYS=7      # 日记归档保留天数
 
