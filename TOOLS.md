@@ -29,6 +29,35 @@ Things like:
 - **模型**: Apple M4 GPU 加速
 - **状态**: `qmd status`
 
+### epro-memory (Tiered LLM Memory)
+
+- **安装**: `pnpm add @tobybridges/epro-memory` (已安装)
+- **路径**: `~/.openclaw/node_modules/@tobybridges/epro-memory`
+- **配置**: `epro-memory.json` + `.env.epro-memory`
+- **初始化**: `./scripts/epro-memory-init.sh`
+- **每日提取**: `scripts/daily-memory-extractor.js` (由 cron 00:00 调用，仅写入数据库)
+- **后端**: Kimi 2.5 (LLM + Embedding via OpenAI-compatible API)
+- **数据库**: LanceDB (`~/.openclaw/workspace/memory/epro-lancedb`)
+- **功能**:
+  - **6 类分类**: profile, preferences, entities, events, cases, patterns
+  - **L0/L1/L2 三层**: 一句话摘要 → 结构化总结 → 完整叙述
+  - **自动提取**: 从对话自动提取记忆
+  - **智能去重**: 向量相似度 + LLM 决策
+  - **自动召回**: 相关记忆自动注入上下文
+- **任务分工**:
+  - Daily Memory Extractor (00:00): 自动提取 → epro-memory 数据库
+  - Memory Maintenance (20:55): 人工提炼 → MEMORY.md 长期档案
+- **状态**: ✅ 已配置并导入历史记忆，停用 Ollama，完全使用 Kimi API
+- **注意**: Ollama 本地 embedding 已停用 (2026-02-19)
+
+### X Video Analysis
+
+- **脚本**: `scripts/x-video-analyzer.sh`
+- **功能**: 下载 X 视频 → 提取音频 → Whisper 识别 → 文字总结
+- **依赖**: yt-dlp + ffmpeg + Whisper
+- **限制**: 10 分钟以内视频
+- **状态**: ✅ Whisper 已安装 (2026-02-19)
+
 ### Model Strategy (2026-02-19)
 
 - **Default model**: `google/gemini-flash-latest` (Gemini Flash) — 全局默认，响应极快
