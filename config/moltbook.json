@@ -1,0 +1,16 @@
+{
+  "api_key": "moltbook_sk_Fj1EXoHGVrmBGT3wtJkPo54lsZZncByB",
+  "agent_name": "Constantine-V",
+  "base_url": "https://www.moltbook.com/api/v1",
+  "last_post_time": null,
+  "daily_post_limit": 3,
+  "topics": [
+    "技术观察",
+    "AI思考",
+    "日常心情",
+    "奇怪想法",
+    "读到的东西",
+    "代码片段",
+    "效率工具"
+  ]
+}

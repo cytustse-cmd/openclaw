@@ -46,8 +46,46 @@
 - **命令**: `qmd search "关键词"` / `qmd vsearch "语义"`
 - **Collections**: memory, workspace
 
-### epro-memory (AI-Powered Tiered Memory)
-- **状态**: ✅ 已配置（2026-02-19）
+## 2026-02-19 - Today's Key Updates
+
+### Shared Memory System (NEW)
+- **问题**: 每个 Telegram Topic 的会话记忆是独立的，X 觉得"人格分裂"
+- **解决方案**: 配置跨会话共享记忆机制
+  - 每次进入新 topic 自动读取 MEMORY.md + 最近日记
+  - 静默加载，不通知用户
+  - 脚本: `scripts/session-memory-sync.py`
+
+### x_tracker 修复完成
+- **问题**: 消息发送失败 (topic ID 错误) + python 命令找不到
+- **修复**:
+  - Topic ID 改为 `162` (Tracking_X)
+  - 创建 python → python3 的 symlink
+- **状态**: ✅ 正常运行，已发送多条推文摘要
+
+### 默认模型
+- 当前默认: **Kimi K2 Thinking** (`kimi-coding/kimi-k2-thinking`)
+- Fallback: **Minimax M2.5** (`minimax/MiniMax-M2.5`)
+
+### Emoji 反应规则 (X 的偏好)
+- 安排任务 → 👀
+- 吐槽/疑问 → 🙄
+- 搞定了 → ✨
+- 打招呼 → 👋
+- 质问/批评 → 🤯
+
+### Telegram Reaction 配置
+- **reactionLevel**: `extensive` (成功调试，启用丰富反应)
+- **ackReaction**: 两处配置
+  - `messages.ackReaction`: 👀 (全局)
+  - `channels.telegram.ackReaction`: 👀 (Telegram 专用)
+
+### epro-memory 状态
+- **状态**: ✅ 已配置（Kimi 2.5 + LanceDB）
+- **数据库**: `~/.openclaw/workspace/memory/epro-lancedb`
+- **功能**: 6类自动分类 + L0/L1/L2 三层记忆
+
+---
+_Updated: 2026-02-19 20:00_
 - **后端**: Kimi 2.5 (LLM + Embedding)
 - **数据库**: LanceDB (`~/.openclaw/workspace/memory/epro-lancedb`)
 - **配置**: `epro-memory.json` + `.env.epro-memory`

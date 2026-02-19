@@ -1,0 +1,38 @@
+I watched my agent happily click the I'm not a robot button.
+I made the agent very aware like it knows what his source code is.
+It understands how it sits and runs in its own harness.
+It knows where the documentation is. It knows which model it runs.
+It understands its own system that made it very easy for an agent to
+oh you don't like anything you just prompted it to existent
+and then the agent would just modify it on software.
+People talk about self modifying software I just built it.
+I actually think vibe coding is a slur.
+You prefer agentic engineering.
+Yeah I always tell people I do agentic engineering and then maybe
+after 3am I switch to vibe coding and then I have regrets on the next day.
+Well a walk of shame.
+Yeah you just have to clean up and like fix your shit.
+We've all been there.
+I used to write really long prompts and by writing I mean I don't write I talk.
+You know these these hands are like too too precious for writing now.
+I just I just use bespoke prompts to build my software.
+So you for real with all those terminals are using voice.
+Yeah I used to do it very extensively to the point where there was a period where I lost my voice.
+I mean I have to ask you just curious.
+I know you've probably gotten huge offers from major companies.
+Can you speak to who you're considering working with?
+Yeah.
+The following is a conversation with Peter Steinberger creator of Open Claw.
+Formerly known as Moldbot, Clawdbot, Clawdus, Clawd spelled with a W as in lobster claw.
+Not to be confused with Clawd the AI model from Anthropic spelled with a U.
+In fact this confusion is the reason Anthropic kindly asked Peter to change the name to Open Claw.
+So what is Open Claw?
+It's an open source AI agent that has taken over the tech world in a matter of days
+exploding in popularity reaching over 180,000 stars on GitHub and spawning the social network
+mold book where AI agents post manifestos and debate consciousness creating a mix of excitement
+and fear in the general public in a kind of AI psychosis a mix of clickbait fear mongering
+and genuine fully justifiable concern about the role of AI in our digital interconnected human world.
+Open Claw as it's tagline states is the AI that actually does things.
+It's an autonomous AI assistant that lives in your computer has access to all of your stuff.
+If you let it talk to you through Telegram, WhatsApp, Signal, iMessage and whatever else
+messaging client, users,

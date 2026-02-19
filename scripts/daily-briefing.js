@@ -11,6 +11,7 @@ const { execSync } = require('child_process');
 
 const WORKSPACE = process.env.OPENCLAW_WORKSPACE || '/Users/xfurious/.openclaw/workspace';
 const MEMORY_DIR = path.join(WORKSPACE, 'memory');
+const DIGEST_DIR = path.join(WORKSPACE, 'ai-daily-digest');
 
 // Date formatting helpers
 function formatDate(date) {
@@ -173,6 +174,83 @@ function getSystemStatus() {
   return status;
 }
 
+// Get latest AI digest (tech news)
+function getLatestDigest() {
+  const DIGEST_FILE = '/tmp/digest.md';
+  
+  if (!fs.existsSync(DIGEST_FILE)) {
+    return null;
+  }
+  
+  const content = fs.readFileSync(DIGEST_FILE, 'utf-8');
+  
+  // Extract key sections
+  const result = {
+    highlights: [],
+    todayView: '',
+    articles: []
+  };
+  
+  const lines = content.split('\n');
+  
+  // Extract "今日看点"
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].includes('今日看点')) {
+      const nextLines = [];
+      for (let j = i + 1; j < lines.length && j < i + 5; j++) {
+        if (lines[j].trim().startsWith('##') || lines[j].trim() === '---') break;
+        if (lines[j].trim()) nextLines.push(lines[j].trim().replace(/> /g, ''));
+      }
+      result.todayView = nextLines.join(' ').substring(0, 200);
+      break;
+    }
+  }
+  
+  // Extract Top 3 highlights (look for lines with 🥇🥈🥉)
+  for (const line of lines) {
+    if (line.includes('🥇') || line.includes('🥈') || line.includes('🥉')) {
+      const match = line.match(/\*\*(.+?)\*\*/);
+      if (match && result.highlights.length < 3) {
+        result.highlights.push(match[1]);
+      }
+    }
+  }
+  
+  // Extract article list (look for numbered items under categories)
+  const categoryPattern = /^##\s+[💡⚙️🤖🔒🛠📝📰]/;
+  let currentCategory = '';
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    
+    // Check for category headers
+    if (categoryPattern.test(trimmed)) {
+      currentCategory = trimmed.replace(/^##\s+/, '').trim();
+      continue;
+    }
+    
+    // Extract article numbers (### 1., ### 2., etc.)
+    const articleMatch = trimmed.match(/^###\s+(\d+)\.\s+(.+)$/);
+    if (articleMatch && currentCategory) {
+      let title = articleMatch[2].trim();
+      // Remove markdown links
+      title = title.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+      // Remove trailing info after —
+      title = title.split('—')[0].trim();
+      
+      if (title.length > 5) {
+        result.articles.push({
+          category: currentCategory,
+          title: title
+        });
+      }
+    }
+  }
+  
+  return result.articles.length > 0 ? result : null;
+}
+
 // Generate the briefing
 async function generateBriefing() {
   const now = new Date();
@@ -199,6 +277,17 @@ async function generateBriefing() {
     });
     briefing += '\n';
   }
+  
+  // Tech news digest - DISABLED by user preference
+  // const digest = getLatestDigest();
+  // if (digest && digest.highlights && digest.highlights.length > 0) {
+  //   briefing += `📰 今日科技新闻 (Top 5):\n`;
+  //   digest.articles.forEach((article, idx) => {
+  //     const title = article.title.length > 50 ? article.title.substring(0, 50) + '...' : article.title;
+  //     briefing += `  ${idx + 1}. ${title}\n`;
+  //   });
+  //   briefing += '\n';
+  // }
   
   // Today's notes
   const todayNotes = getTodayNotes();

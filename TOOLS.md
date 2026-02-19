@@ -60,10 +60,9 @@ Things like:
 
 ### Model Strategy (2026-02-19)
 
-- **Default model**: `google/gemini-flash-latest` (Gemini Flash) — 全局默认，响应极快
-- **Fallback**: `minimax/MiniMax-M2.5` (MiniMax) — 备选，稳定性高
+- **Primary model**: `kimi-coding/kimi-k2-thinking` (Kimi K2 Thinking) — 全局默认
+- **Fallback**: `minimax/MiniMax-M2.5` (Minimax) — 备选，稳定性高
 - **High-end Fallback**: `google-antigravity/claude-opus-4-5-thinking` (Opus 4.5) — 复杂任务时用 `/model` 手动切换
-- **Cron jobs**: 建议保持 Gemini Flash 或 MiniMax
 - **免费模型**: GLM-5 / GLM-4.7 (zai) 零成本选项
 
 ### Configuration Notes
